@@ -9,7 +9,7 @@ import { Content } from "./style";
 
 const HomePage = () => {
   const [moviesList, setMoviesList] = useState<MovieInterface[]>([]);
-  const [requestList, setRequestList] = useState<string>("popular");
+  const requestList = "popular";
 
   useEffect(() => {
     const loadMovies = async (requestList: string) => {
