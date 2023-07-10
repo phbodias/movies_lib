@@ -1,3 +1,4 @@
+import GenreListInterface from "../types/genreType";
 import MovieInterface from "../types/movieType";
 import tmdb_api from "./tmdb_api";
 
@@ -8,8 +9,8 @@ interface GetMoviesResponse {
   total_results: number;
 }
 
-interface GetGenres {
-  genres: [id: number, name: string];
+interface GetGenresResponse {
+  genres: GenreListInterface[];
 }
 
 export const getMoviesList = async (
@@ -30,7 +31,13 @@ export const getMoviesList = async (
 export const getGenres = async () => {
   const res = await tmdb_api.get("/genre/movie/list");
 
-  const { genres } = res.data as GetGenres;
+  const { genres } = res.data as GetGenresResponse;
 
-  return genres;
+  const genresDict: { [id: number]: string } = {};
+
+  for (let i = 0; i < genres.length; i++) {
+    genresDict[genres[i].id] = genres[i].name;
+  }
+
+  return genresDict;
 };
