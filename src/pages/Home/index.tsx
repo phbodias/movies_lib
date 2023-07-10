@@ -16,7 +16,6 @@ const HomePage = () => {
       try {
         const data = await getMoviesList(requestList, 1);
         setMoviesList(data);
-        console.log(data);
       } catch (err) {
         if (err instanceof AxiosError) alert(err.message);
         else alert("Unexpected error");
@@ -29,8 +28,8 @@ const HomePage = () => {
   return (
     <Content>
       {moviesList &&
-        moviesList.map((movie) => {
-          return <MovieCard {...movie} />;
+        moviesList.map((movie, index) => {
+          return <MovieCard {...movie} key={index} />;
         })}
     </Content>
   );

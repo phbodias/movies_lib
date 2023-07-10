@@ -8,6 +8,10 @@ interface GetMoviesResponse {
   total_results: number;
 }
 
+interface GetGenres {
+  genres: [id: number, name: string];
+}
+
 export const getMoviesList = async (
   requestList: string,
   page: number
@@ -21,4 +25,12 @@ export const getMoviesList = async (
   const moviesList: MovieInterface[] = data.results;
 
   return moviesList;
+};
+
+export const getGenres = async () => {
+  const res = await tmdb_api.get("/genre/movie/list");
+
+  const { genres } = res.data as GetGenres;
+
+  return genres;
 };

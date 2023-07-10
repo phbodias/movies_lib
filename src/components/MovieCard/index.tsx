@@ -12,7 +12,6 @@ const MovieCard = (props: MovieInterface) => {
           <p>{props.title}</p>
           <p>{props.vote_average}</p>
         </div>
-        <p>{props.genre_ids}</p>
       </Infos>
     </Content>
   );
