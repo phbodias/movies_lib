@@ -8,8 +8,6 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
         font-family: "Inter", sans-serif;
-        color: #fff;
-        cursor: zoom-in;
     }
 
     body{
@@ -19,5 +17,7 @@ export const GlobalStyle = createGlobalStyle`
         background-position: center;
         background-attachment: fixed;
         backdrop-filter: grayscale(80%);
+        color: #fff;
+        cursor: zoom-in;
     }
 `;

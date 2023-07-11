@@ -24,14 +24,12 @@ const Title = styled.div`
   align-items: center;
   gap: 5px;
   font-weight: 700;
-
-  * {
-    font-size: 25px;
-    color: #ffc107;
-  }
+  font-size: 25px;
+  color: #ffc107;
 
   svg {
     font-size: 45px;
+    cursor: pointer;
   }
 `;
 
