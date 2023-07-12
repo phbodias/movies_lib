@@ -5,15 +5,17 @@ import MovieInterface from "../../types/movieType";
 
 import { getGenres, getMoviesList } from "../../services/tmdb_services";
 import MovieCard from "../../components/MovieCard";
-import { Content } from "./style";
+import { Content, Movies, RequestOption, RequestOptions } from "./style";
 
 const HomePage = () => {
   const [moviesList, setMoviesList] = useState<MovieInterface[]>([]);
   const [genres, setGenres] = useState<{ [id: number]: string }>();
-  const requestList = "popular";
+  const [requestList, setRequestList] = useState<number>(0);
+
+  const requestOptions = ["Popular", "Upcoming", "Now playing", "Top rated"];
 
   useEffect(() => {
-    const loadMovies = async (requestList: string) => {
+    const loadMovies = async (requestList: number) => {
       try {
         const moviesData = await getMoviesList(requestList, 1);
         const genresData = await getGenres();
@@ -30,22 +32,36 @@ const HomePage = () => {
 
   return (
     <Content>
-      {moviesList &&
-        genres &&
-        moviesList.map((movie, index) => {
-          const movieGenres = movie.genre_ids.map((id) => {
-            return genres[id];
-          });
+      <RequestOptions>
+        {requestOptions.map((option, index) => {
           return (
-            <MovieCard
-              title={movie.title}
-              vote_average={movie.vote_average}
-              poster_path={movie.poster_path}
-              genres={movieGenres}
+            <RequestOption
               key={index}
-            />
+              onClick={() => setRequestList(index)}
+              selected={requestList === index}>
+              {option}
+            </RequestOption>
           );
         })}
+      </RequestOptions>
+      <Movies>
+        {moviesList &&
+          genres &&
+          moviesList.map((movie, index) => {
+            const movieGenres = movie.genre_ids.map((id) => {
+              return genres[id];
+            });
+            return (
+              <MovieCard
+                title={movie.title}
+                vote_average={movie.vote_average}
+                poster_path={movie.poster_path}
+                genres={movieGenres}
+                key={index}
+              />
+            );
+          })}
+      </Movies>
     </Content>
   );
 };
