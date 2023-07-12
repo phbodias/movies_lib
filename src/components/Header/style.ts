@@ -42,7 +42,7 @@ const Title = styled.div`
   }
 `;
 
-const Search = styled.div<Props>`
+const Search = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
