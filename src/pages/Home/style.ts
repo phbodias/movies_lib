@@ -7,6 +7,9 @@ interface RequestProps {
 const Content = styled.div`
   padding: 20px 10%;
   transition: all ease 0.7s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const RequestOptions = styled.div`
@@ -41,6 +44,10 @@ const Movies = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 15px;
+  
+  @media(max-width: 790px){
+    justify-content: center;
+  }
 `;
 
 export { Content, RequestOptions, RequestOption, Movies };

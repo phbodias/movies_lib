@@ -8,7 +8,7 @@ interface Props {
 
 const Header = (props: Props) => {
   return (
-    <Content headerColor={props.colorHeader}>
+    <Content headercolor={props.colorHeader}>
       <Title>
         <BiSolidCameraMovie />
         <p>MoviesLib</p>
