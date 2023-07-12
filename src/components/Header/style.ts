@@ -6,7 +6,8 @@ interface Props {
 
 const Content = styled.div<Props>`
   width: 100%;
-  height: 80px;
+  height: fit-content;
+  min-height: 80px;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -17,6 +18,12 @@ const Content = styled.div<Props>`
   display: flex;
   align-items: center;
   gap: 10px;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+  }
 `;
 
 const Title = styled.div`
@@ -26,6 +33,8 @@ const Title = styled.div`
   font-weight: 700;
   font-size: 25px;
   color: #ffc107;
+  min-width: 200px;
+  max-width: 350px;
 
   svg {
     font-size: 45px;
@@ -33,7 +42,7 @@ const Title = styled.div`
   }
 `;
 
-const Search = styled.div`
+const Search = styled.div<Props>`
   display: flex;
   align-items: center;
   justify-content: space-between;
