@@ -16,7 +16,7 @@ interface GetGenresResponse {
 export const getMoviesList = async (
   requestList: number,
   page: number
-): Promise<MovieInterface[]> => {
+): Promise<GetMoviesResponse> => {
   const requestOptions = ["popular", "upcoming", "now_playing", "top_rated"];
 
   const res = await tmdb_api.get(`movie/${requestOptions[requestList]}`, {
@@ -25,9 +25,7 @@ export const getMoviesList = async (
 
   const data = res.data as GetMoviesResponse;
 
-  const moviesList: MovieInterface[] = data.results;
-
-  return moviesList;
+  return data;
 };
 
 export const getGenres = async () => {
