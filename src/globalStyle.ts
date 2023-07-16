@@ -16,8 +16,7 @@ export const GlobalStyle = createGlobalStyle`
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-        background-attachment: fixed;
-        backdrop-filter: grayscale(80%);
+        min-height: 100vh;
         color: #fff;
         cursor: zoom-in;
     }

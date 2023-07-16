@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/Home";
 import Header from "./components/Header";
 import { useEffect, useState } from "react";
+import MoviePage from "./pages/MoviePage";
 
 const App = () => {
   const [colorHeader, setColorHeader] = useState<boolean>(false);
@@ -20,6 +21,7 @@ const App = () => {
       <Header colorHeader={colorHeader} />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/movie/:movieId" element={<MoviePage />} />
       </Routes>
     </BrowserRouter>
   );
