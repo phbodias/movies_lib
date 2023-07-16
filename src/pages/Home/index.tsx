@@ -19,7 +19,7 @@ const HomePage = () => {
   const requestOptions = ["Popular", "Upcoming", "Now playing", "Top rated"];
 
   useEffect(() => {
-    //scrollToTop();
+    scrollToTop();
     const loadMovies = async (requestList: number, page: number) => {
       try {
         const moviesData = await getMoviesList(requestList, page);
