@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
-interface RequestProps {
+interface SelectedProps {
   selected: boolean;
 }
 
 const Content = styled.div`
   padding: 20px 10%;
   transition: all ease 0.7s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const RequestOptions = styled.div`
@@ -23,7 +26,7 @@ const RequestOptions = styled.div`
   }
 `;
 
-const RequestOption = styled.div<RequestProps>`
+const RequestOption = styled.div<SelectedProps>`
   background-color: ${(props) => (props.selected ? "#218838" : "#000")};
   width: 120px;
   height: 30px;
@@ -41,6 +44,40 @@ const Movies = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 15px;
+
+  @media (max-width: 790px) {
+    justify-content: center;
+  }
 `;
 
-export { Content, RequestOptions, RequestOption, Movies };
+const Pages = styled.div`
+  margin: 40px 0;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.6);
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  cursor: pointer;
+
+  .active {
+    color: #13b7dc;
+  }
+
+  :hover {
+    color: #13b7dc;
+  }
+
+  .pages {
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+  }
+`;
+
+export { Content, RequestOptions, RequestOption, Movies, Pages };

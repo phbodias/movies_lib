@@ -6,6 +6,8 @@ const Content = styled.div`
 
   img {
     width: 200px;
+    height: 350px;
+    object-fit: cover;
     cursor: pointer;
   }
 

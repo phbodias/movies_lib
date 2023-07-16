@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface Props {
-  headerColor: boolean;
+  headercolor: boolean;
 }
 
 const Content = styled.div<Props>`
@@ -12,8 +12,7 @@ const Content = styled.div<Props>`
   top: 0;
   z-index: 1;
   transition: all ease 0.7s;
-  background-color: ${(props) =>
-    props.headerColor ? "#fffcf5" : "transparent"};
+  background-color: ${(props) => props.headercolor && "#fffcf5"};
   padding: 0 10%;
   display: flex;
   align-items: center;
