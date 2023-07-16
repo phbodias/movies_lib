@@ -15,7 +15,7 @@ const Content = styled.div`
 const RequestOptions = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 50px;
   cursor: pointer;
   width: fit-content;
   max-width: 80vw;
@@ -51,28 +51,32 @@ const Movies = styled.div`
 `;
 
 const Pages = styled.div`
-  height: 45px;
-  margin: 30px 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  font-size: 25px;
+  margin: 40px 0;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.6);
+  font-size: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  cursor: pointer;
+
+  .active {
+    color: #13b7dc;
+  }
+
+  :hover {
+    color: #13b7dc;
+  }
 
   .pages {
     display: flex;
-    gap: 20px;
-    text-decoration: none;
-    cursor: pointer;
-    list-style: none;
-
-    .active {
-      color: #13b7dc;
-    }
-
-    :hover {
-      color: #13b7dc;
-    }
+    justify-content: center;
+    max-width: 100%;
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
   }
 `;
 

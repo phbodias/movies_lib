@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { AxiosError } from "axios";
-import ReactPaginate from "react-paginate";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Pagination from "@mui/material/Pagination";
 
 import MovieInterface from "../../types/movieType";
 import { getGenres, getMoviesList } from "../../services/tmdb_services";
@@ -11,7 +11,7 @@ import { Content, Movies, Pages, RequestOption, RequestOptions } from "./style";
 
 const HomePage = () => {
   const [moviesList, setMoviesList] = useState<MovieInterface[]>([]);
-  const [page, setPage] = useState<number>(1);
+  const [actualPage, setActualPage] = useState<number>(1);
   const [total_pages, setTotal_pages] = useState<number>(1);
   const [genres, setGenres] = useState<{ [id: number]: string }>();
   const [requestList, setRequestList] = useState<number>(0);
@@ -19,7 +19,7 @@ const HomePage = () => {
   const requestOptions = ["Popular", "Upcoming", "Now playing", "Top rated"];
 
   useEffect(() => {
-    scrollToTop();
+    //scrollToTop();
     const loadMovies = async (requestList: number, page: number) => {
       try {
         const moviesData = await getMoviesList(requestList, page);
@@ -30,14 +30,15 @@ const HomePage = () => {
       } catch (err) {
         if (err instanceof AxiosError) notifyAxiosError(err.message);
         else notifyError();
+        setActualPage(1);
       }
     };
 
-    console.log(page);
-    loadMovies(requestList, page);
-  }, [requestList, page]);
+    loadMovies(requestList, actualPage);
+  }, [requestList, actualPage]);
 
   const setList = (index: number) => {
+    setActualPage(1);
     setRequestList(index);
   };
 
@@ -46,6 +47,11 @@ const HomePage = () => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
+
+  const handlePage = (e: ChangeEvent<unknown>, page: number) => {
+    e.preventDefault();
+    setActualPage(page);
   };
 
   return (
@@ -62,21 +68,6 @@ const HomePage = () => {
           );
         })}
       </RequestOptions>
-      {total_pages > 1 && (
-        <Pages>
-          <ReactPaginate
-            previousLabel={"←"}
-            nextLabel={"→"}
-            pageCount={total_pages}
-            pageRangeDisplayed={1}
-            className="pages"
-            activeClassName="active"
-            onClick={scrollToTop}
-            onPageChange={(selectedItem) =>
-              setPage(selectedItem.selected + 1)
-            }></ReactPaginate>
-        </Pages>
-      )}
       <Movies>
         {moviesList &&
           genres &&
@@ -95,6 +86,19 @@ const HomePage = () => {
             );
           })}
       </Movies>
+      {total_pages > 1 && (
+        <Pages>
+          <Pagination
+            count={total_pages}
+            page={actualPage}
+            onChange={(event, page) => handlePage(event, page)}
+            variant="outlined"
+            shape="rounded"
+            color="primary"
+            className="pages"
+          />
+        </Pages>
+      )}
       <ToastContainer
         position="top-right"
         autoClose={3000}
