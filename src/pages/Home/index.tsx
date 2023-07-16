@@ -95,6 +95,7 @@ const HomePage = () => {
             variant="outlined"
             shape="rounded"
             color="primary"
+            siblingCount={1}
             className="pages"
           />
         </Pages>
