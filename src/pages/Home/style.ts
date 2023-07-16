@@ -59,6 +59,7 @@ const Pages = styled.div`
   gap: 20px;
   text-decoration: none;
   cursor: pointer;
+  height: 50px;
 
   .active {
     color: #13b7dc;
@@ -70,13 +71,12 @@ const Pages = styled.div`
 
   .pages {
     background-color: rgba(255, 255, 255, 0.6);
-    padding: 5px;
+    padding: 5px 15px;
     display: flex;
     justify-content: center;
-    max-width: 100%;
-    height: 100%;
-    overflow-y: hidden;
-    overflow-x: scroll;
+    max-width: 70%;
+    overflow-x: visible;
+    border-radius: 15px;
   }
 `;
 
