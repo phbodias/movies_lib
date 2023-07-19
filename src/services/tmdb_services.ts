@@ -41,3 +41,11 @@ export const getGenres = async () => {
 
   return genresDict;
 };
+
+export const getMovieById = async (id: string): Promise<MovieInterface> => {
+  const res = await tmdb_api.get(`/movie/${id}`);
+
+  const data = res.data as MovieInterface;
+
+  return data;
+};

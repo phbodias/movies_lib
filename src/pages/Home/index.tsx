@@ -72,7 +72,7 @@ const HomePage = () => {
         {moviesList &&
           genres &&
           moviesList.map((movie, index) => {
-            const movieGenres = movie.genre_ids.map((id) => {
+            const movieGenres = movie.genre_ids?.map((id) => {
               return genres[id];
             });
             return (
@@ -81,7 +81,7 @@ const HomePage = () => {
                 title={movie.title}
                 vote_average={movie.vote_average}
                 poster_path={movie.poster_path}
-                genres={movieGenres}
+                genres={movieGenres ? movieGenres : []}
                 key={index}
               />
             );
