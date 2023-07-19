@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { BsCashCoin } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
 
-import { getMovieById } from "../../services/tmdb_services";
+import { getMovieById, getMovieCast } from "../../services/tmdb_services";
 import MovieInterface from "../../types/movieType";
 import HourConversor from "../../hooks/hourConversor";
 import { Content, GeneralInfos } from "./style";
@@ -19,9 +19,11 @@ const MoviePage = () => {
     const loadMovie = async (movieId: string) => {
       try {
         const movie = await getMovieById(movieId);
+        const movieCast = await getMovieCast(movieId);
         setMovie(movie);
         setDuration(HourConversor(movie.runtime ? movie.runtime : 0));
         console.log(movie);
+        console.log(movieCast);
       } catch (error) {
         alert("error");
       }

@@ -1,3 +1,4 @@
+import ActorInterace from "../types/actorType";
 import GenreListInterface from "../types/genreType";
 import MovieInterface from "../types/movieType";
 import tmdb_api from "./tmdb_api";
@@ -11,6 +12,11 @@ interface GetMoviesResponse {
 
 interface GetGenresResponse {
   genres: GenreListInterface[];
+}
+
+interface GetCastResponse {
+  id: number;
+  cast: ActorInterace[];
 }
 
 export const getMoviesList = async (
@@ -48,4 +54,14 @@ export const getMovieById = async (id: string): Promise<MovieInterface> => {
   const data = res.data as MovieInterface;
 
   return data;
+};
+
+export const getMovieCast = async (id: string): Promise<ActorInterace[]> => {
+  const res = await tmdb_api.get(`/movie/${id}/credits`);
+
+  const data = res.data as GetCastResponse;
+
+  return data.cast.filter((worker) => {
+    return worker.known_for_department === "Acting"
+  });
 };
