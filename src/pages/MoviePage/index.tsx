@@ -6,7 +6,9 @@ import { BiTimeFive } from "react-icons/bi";
 import { getMovieById, getMovieCast } from "../../services/tmdb_services";
 import MovieInterface from "../../types/movieType";
 import HourConversor from "../../hooks/hourConversor";
-import { Content, GeneralInfos } from "./style";
+import { Cast, Content, GeneralInfos } from "./style";
+import ActorInterace from "../../types/actorType";
+import noProfilePic from "./../../images/noprofilePic.jpg";
 
 const imagesURL = import.meta.env.VITE_MOVIE_IMG as string;
 
@@ -14,6 +16,7 @@ const MoviePage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState<MovieInterface>();
   const [duration, setDuration] = useState<string>("0");
+  const [cast, setCast] = useState<ActorInterace[]>([]);
 
   useEffect(() => {
     const loadMovie = async (movieId: string) => {
@@ -22,8 +25,8 @@ const MoviePage = () => {
         const movieCast = await getMovieCast(movieId);
         setMovie(movie);
         setDuration(HourConversor(movie.runtime ? movie.runtime : 0));
+        setCast(movieCast);
         console.log(movie);
-        console.log(movieCast);
       } catch (error) {
         alert("error");
       }
@@ -72,6 +75,33 @@ const MoviePage = () => {
               </div>
             </div>
           </GeneralInfos>
+          <Cast>
+            <p className="title">Cast:</p>
+            <div className="actors">
+              {cast &&
+                cast.map((actor, index) => {
+                  return (
+                    <div key={index} className="card">
+                      {actor.profile_path ? (
+                        <img
+                          src={imagesURL + actor.profile_path}
+                          alt={actor.name}
+                        />
+                      ) : (
+                        <img
+                          src={noProfilePic}
+                          alt={actor.name}
+                        />
+                      )}
+                      <div className="name">
+                        <p>{actor.name}</p>
+                        <p>{actor.character}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </Cast>
         </Content>
       ) : (
         ""
