@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Content = styled.div`
   width: 100vw;
-  padding: 0 10%;
+  padding: 20px 10%;
   margin: 50px 0;
   background: rgba(0, 0, 0, 0.35);
 `;
@@ -11,9 +11,7 @@ const GeneralInfos = styled.div`
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  padding: 20px;
+  justify-content: space-between;
   font-size: 17px;
 
   img {
@@ -22,8 +20,8 @@ const GeneralInfos = styled.div`
   }
 
   .infos {
-    width: calc(100% - 320px);
-    max-width: 700px;
+    width: calc(100% - 300px);
+    max-width: 750px;
     min-width: 300px;
 
     .top {
@@ -77,7 +75,7 @@ const GeneralInfos = styled.div`
       }
     }
 
-    .floor{
+    .floor {
       display: flex;
       gap: 25px;
       align-items: center;
@@ -85,11 +83,11 @@ const GeneralInfos = styled.div`
       font-weight: 300;
       flex-wrap: wrap;
 
-      svg{
+      svg {
         font-size: 25px;
       }
 
-      div{
+      div {
         display: flex;
         align-items: center;
         gap: 5px;
@@ -98,4 +96,49 @@ const GeneralInfos = styled.div`
   }
 `;
 
-export { Content, GeneralInfos };
+const Cast = styled.div`
+  margin-top: 30px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: #000;
+  padding: 35px;
+
+  img {
+    width: 120px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .title {
+    font-size: 30px;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .actors {
+    display: flex;
+    width: 100%;
+    overflow: scroll;
+    gap: 25px;
+    font-size: 15px;
+  }
+
+  .card {
+    background-color: #ffffff;
+    border: solid 1px #e3e3e3;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .name {
+    :nth-child(1) {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    font-size: 13px;
+  }
+`;
+
+export { Content, GeneralInfos, Cast };
