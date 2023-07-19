@@ -12,7 +12,7 @@ const Content = styled.div<Props>`
   top: 0;
   z-index: 1;
   transition: all ease 0.7s;
-  background-color: ${(props) => props.headercolor && "#fffcf5"};
+  background-color: ${(props) => props.headercolor? "#fffcf5" : "rgba(0, 0, 0, 0.5)"};
   padding: 0 10%;
   display: flex;
   align-items: center;
