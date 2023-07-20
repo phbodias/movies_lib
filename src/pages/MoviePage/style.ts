@@ -114,6 +114,7 @@ const Cast = styled.div`
     font-size: 30px;
     display: block;
     margin-bottom: 10px;
+    font-weight: 600;
   }
 
   .actors {
@@ -125,7 +126,6 @@ const Cast = styled.div`
   }
 
   .card {
-    background-color: #ffffff;
     border: solid 1px #e3e3e3;
     border-radius: 10px;
     padding: 10px;
@@ -141,4 +141,21 @@ const Cast = styled.div`
   }
 `;
 
-export { Content, GeneralInfos, Cast };
+const Recommendations = styled.div`
+  margin-top: 50px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  background-color: #ffffff;
+
+  .title {
+    font-size: 30px;
+    color: #000;
+    width: 100%;
+    font-weight: 600;
+  }
+`;
+
+export { Content, GeneralInfos, Cast, Recommendations };

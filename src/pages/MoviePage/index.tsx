@@ -4,15 +4,17 @@ import { BsCashCoin } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
 
 import {
+  getGenres,
   getMovieById,
   getMovieCast,
   getRecommendations,
 } from "../../services/tmdb_services";
 import MovieInterface from "../../types/movieType";
 import HourConversor from "../../hooks/hourConversor";
-import { Cast, Content, GeneralInfos } from "./style";
+import { Cast, Content, GeneralInfos, Recommendations } from "./style";
 import ActorInterace from "../../types/actorType";
 import noProfilePic from "./../../images/noprofilePic.jpg";
+import MovieCard from "../../components/MovieCard";
 
 const imagesURL = import.meta.env.VITE_MOVIE_IMG as string;
 
@@ -21,6 +23,8 @@ const MoviePage = () => {
   const [movie, setMovie] = useState<MovieInterface>();
   const [duration, setDuration] = useState<string>("0");
   const [cast, setCast] = useState<ActorInterace[]>([]);
+  const [recommendations, setRecommendations] = useState<MovieInterface[]>([]);
+  const [genres, setGenres] = useState<{ [id: number]: string }>();
 
   useEffect(() => {
     const loadMovie = async (movieId: string) => {
@@ -28,10 +32,12 @@ const MoviePage = () => {
         const movie = await getMovieById(movieId);
         const movieCast = await getMovieCast(movieId);
         const recommendations = await getRecommendations(movieId);
+        const genresData = await getGenres();
         setMovie(movie);
         setDuration(HourConversor(movie.runtime ? movie.runtime : 0));
         setCast(movieCast);
-        console.log(recommendations);
+        setRecommendations(recommendations);
+        setGenres(genresData);
       } catch (error) {
         alert("error");
       }
@@ -104,6 +110,25 @@ const MoviePage = () => {
                 })}
             </div>
           </Cast>
+          <Recommendations>
+            {recommendations && <p className="title">Recommendations:</p>}
+            {genres &&
+              recommendations?.map((movie, index) => {
+                const movieGenres = movie.genre_ids?.map((id) => {
+                  return genres[id];
+                });
+                return (
+                  <MovieCard
+                    id={movie.id}
+                    title={movie.title}
+                    vote_average={movie.vote_average}
+                    poster_path={movie.poster_path}
+                    genres={movieGenres ? movieGenres : []}
+                    key={index}
+                  />
+                );
+              })}
+          </Recommendations>
         </Content>
       ) : (
         ""

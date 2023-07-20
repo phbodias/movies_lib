@@ -16,7 +16,7 @@ interface Props {
 const MovieCard = (props: Props) => {
   const navigate = useNavigate();
 
-  const rediretcToMoviePage = (id: number) => navigate(`movie/${id}`);
+  const rediretcToMoviePage = (id: number) => navigate(`/movie/${id}`);
 
   return (
     <Content>
@@ -34,7 +34,7 @@ const MovieCard = (props: Props) => {
         <Infos>
           <div className="title_average">
             <p onClick={() => rediretcToMoviePage(props.id)}>{props.title}</p>
-            {props.vote_average && <p>{props.vote_average}</p>}
+            {props.vote_average && <p>{props.vote_average.toFixed(1)}</p>}
           </div>
           <div className="genres">{props.genres.join().replace(",", ", ")}</div>
         </Infos>
