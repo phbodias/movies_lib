@@ -1,6 +1,6 @@
 import { BiSolidCameraMovie } from "react-icons/bi";
-import { AiOutlineSearch } from "react-icons/ai";
-import { Content, Search, Title } from "./style";
+//import { AiOutlineSearch } from "react-icons/ai";
+import { Content, Title } from "./style";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -18,10 +18,10 @@ const Header = (props: Props) => {
         <BiSolidCameraMovie />
         <p>MoviesLib</p>
       </Title>
-      <Search>
+      {/* <Search>
         <input type="text" placeholder="Search a movie title" />
         <AiOutlineSearch />
-      </Search>
+      </Search> */}
     </Content>
   );
 };

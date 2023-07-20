@@ -5,7 +5,6 @@ const Content = styled.div`
     justify-content: center;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     width: 100%;
 
     img{

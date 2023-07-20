@@ -13,7 +13,7 @@ const Content = styled.div`
   }
 
   .infos {
-    width: calc(100% - 300px);
+    width: calc(100% - 310px);
     max-width: 750px;
     min-width: 300px;
 
@@ -86,6 +86,11 @@ const Content = styled.div`
         gap: 5px;
       }
     }
+  }
+
+  @media(max-width: 770px){
+    justify-content: center;
+    gap: 15px;
   }
 `;
 

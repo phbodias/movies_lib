@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   getGenres,
@@ -15,8 +17,8 @@ import MovieCast from "../../components/MovieCast";
 import Recommendations from "../../components/Recommendations";
 import scrollToTop from "../../hooks/scrollToTop";
 
-import loading from "./../../images/loadingGif.gif";
 import Loading from "../../components/Loading";
+import { AxiosError } from "axios";
 
 const MoviePage = () => {
   const { movieId } = useParams();
@@ -39,10 +41,14 @@ const MoviePage = () => {
         setRecommendations(recommendations);
         setGenres(genresData);
         setLoad(false);
-      } catch (error) {
-        alert("error");
+      } catch (err) {
+        if (err instanceof AxiosError) notifyAxiosError(err.message);
+        else notifyError();
       }
     };
+
+    const notifyAxiosError = (message: string) => toast(message);
+    const notifyError = () => toast("Unexpected error");
 
     movieId && loadMovie(movieId);
   }, [movieId]);
@@ -60,6 +66,18 @@ const MoviePage = () => {
           <Loading />
         </Content>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 };
