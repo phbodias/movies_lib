@@ -29,7 +29,11 @@ const MovieCard = (props: Props) => {
           />
         )}
         {!props.poster_path && (
-          <img src={noImageFilm} alt={props.title + "poster"} />
+          <img
+            src={noImageFilm}
+            alt={props.title + "poster"}
+            onClick={() => rediretcToMoviePage(props.id)}
+          />
         )}
         <Infos>
           <div className="title_average">

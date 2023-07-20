@@ -8,6 +8,7 @@ import MovieInterface from "../../types/movieType";
 import { getGenres, getMoviesList } from "../../services/tmdb_services";
 import MovieCard from "../../components/MovieCard";
 import { Content, Movies, Pages, RequestOption, RequestOptions } from "./style";
+import scrollToTop from "../../hooks/scrollToTop";
 
 const HomePage = () => {
   const [moviesList, setMoviesList] = useState<MovieInterface[]>([]);
@@ -44,10 +45,6 @@ const HomePage = () => {
 
   const notifyAxiosError = (message: string) => toast(message);
   const notifyError = () => toast("Unexpected error");
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  };
 
   const handlePage = (e: ChangeEvent<unknown>, page: number) => {
     e.preventDefault();
