@@ -15,12 +15,16 @@ import MovieCast from "../../components/MovieCast";
 import Recommendations from "../../components/Recommendations";
 import scrollToTop from "../../hooks/scrollToTop";
 
+import loading from "./../../images/loadingGif.gif";
+import Loading from "../../components/Loading";
+
 const MoviePage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState<MovieInterface>();
   const [cast, setCast] = useState<ActorInterace[]>([]);
   const [recommendations, setRecommendations] = useState<MovieInterface[]>([]);
   const [genres, setGenres] = useState<{ [id: number]: string }>();
+  const [load, setLoad] = useState<boolean>(true);
 
   useEffect(() => {
     scrollToTop();
@@ -34,6 +38,7 @@ const MoviePage = () => {
         setCast(movieCast);
         setRecommendations(recommendations);
         setGenres(genresData);
+        setLoad(false);
       } catch (error) {
         alert("error");
       }
@@ -44,14 +49,16 @@ const MoviePage = () => {
 
   return (
     <>
-      {movie ? (
+      {movie && !load ? (
         <Content>
           <GeneralMovieInfos {...movie} />
           <MovieCast {...cast} />
           <Recommendations recommendations={recommendations} genres={genres} />
         </Content>
       ) : (
-        ""
+        <Content>
+          <Loading />
+        </Content>
       )}
     </>
   );
