@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import { BsCashCoin } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
 
-import { getMovieById, getMovieCast } from "../../services/tmdb_services";
+import {
+  getMovieById,
+  getMovieCast,
+  getRecommendations,
+} from "../../services/tmdb_services";
 import MovieInterface from "../../types/movieType";
 import HourConversor from "../../hooks/hourConversor";
 import { Cast, Content, GeneralInfos } from "./style";
@@ -23,10 +27,11 @@ const MoviePage = () => {
       try {
         const movie = await getMovieById(movieId);
         const movieCast = await getMovieCast(movieId);
+        const recommendations = await getRecommendations(movieId);
         setMovie(movie);
         setDuration(HourConversor(movie.runtime ? movie.runtime : 0));
         setCast(movieCast);
-        console.log(movie);
+        console.log(recommendations);
       } catch (error) {
         alert("error");
       }
@@ -88,10 +93,7 @@ const MoviePage = () => {
                           alt={actor.name}
                         />
                       ) : (
-                        <img
-                          src={noProfilePic}
-                          alt={actor.name}
-                        />
+                        <img src={noProfilePic} alt={actor.name} />
                       )}
                       <div className="name">
                         <p>{actor.name}</p>

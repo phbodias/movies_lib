@@ -19,6 +19,11 @@ interface GetCastResponse {
   cast: ActorInterace[];
 }
 
+interface GetRecommendationsResponse {
+  page: number;
+  results: MovieInterface[];
+}
+
 export const getMoviesList = async (
   requestList: number,
   page: number
@@ -62,6 +67,16 @@ export const getMovieCast = async (id: string): Promise<ActorInterace[]> => {
   const data = res.data as GetCastResponse;
 
   return data.cast.filter((worker) => {
-    return worker.known_for_department === "Acting"
+    return worker.known_for_department === "Acting";
   });
+};
+
+export const getRecommendations = async (
+  id: string
+): Promise<MovieInterface[]> => {
+  const res = await tmdb_api.get(`/movie/${id}/recommendations`);
+
+  const data = res.data as GetRecommendationsResponse;
+
+  return data.results;
 };
