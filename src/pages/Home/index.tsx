@@ -9,6 +9,7 @@ import { getGenres, getMoviesList } from "../../services/tmdb_services";
 import MovieCard from "../../components/MovieCard";
 import { Content, Movies, Pages, RequestOption, RequestOptions } from "./style";
 import scrollToTop from "../../hooks/scrollToTop";
+import Loading from "../../components/Loading";
 
 const HomePage = () => {
   const [moviesList, setMoviesList] = useState<MovieInterface[]>([]);
@@ -16,6 +17,7 @@ const HomePage = () => {
   const [total_pages, setTotal_pages] = useState<number>(1);
   const [genres, setGenres] = useState<{ [id: number]: string }>();
   const [requestList, setRequestList] = useState<number>(0);
+  const [load, setLoad] = useState<boolean>(true);
 
   const requestOptions = ["Popular", "Upcoming", "Now playing", "Top rated"];
 
@@ -28,10 +30,12 @@ const HomePage = () => {
         setMoviesList(moviesData.results);
         setTotal_pages(moviesData.total_pages);
         setGenres(genresData);
+        setLoad(false);
       } catch (err) {
         if (err instanceof AxiosError) notifyAxiosError(err.message);
         else notifyError();
         setActualPage(1);
+        setLoad(false);
       }
     };
 
@@ -65,6 +69,7 @@ const HomePage = () => {
           );
         })}
       </RequestOptions>
+      {load && <Loading />}
       <Movies>
         {moviesList &&
           genres &&
