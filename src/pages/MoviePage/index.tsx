@@ -1,7 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { BsCashCoin } from "react-icons/bs";
-import { BiTimeFive } from "react-icons/bi";
 
 import {
   getGenres,
@@ -10,23 +8,22 @@ import {
   getRecommendations,
 } from "../../services/tmdb_services";
 import MovieInterface from "../../types/movieType";
-import HourConversor from "../../hooks/hourConversor";
-import { Cast, Content, GeneralInfos, Recommendations } from "./style";
+import { Content } from "./style";
 import ActorInterace from "../../types/actorType";
-import noProfilePic from "./../../images/noprofilePic.jpg";
-import MovieCard from "../../components/MovieCard";
-
-const imagesURL = import.meta.env.VITE_MOVIE_IMG as string;
+import GeneralMovieInfos from "../../components/GeneralMovieInfos";
+import MovieCast from "../../components/MovieCast";
+import Recommendations from "../../components/Recommendations";
+import scrollToTop from "../../hooks/scrollToTop";
 
 const MoviePage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState<MovieInterface>();
-  const [duration, setDuration] = useState<string>("0");
   const [cast, setCast] = useState<ActorInterace[]>([]);
   const [recommendations, setRecommendations] = useState<MovieInterface[]>([]);
   const [genres, setGenres] = useState<{ [id: number]: string }>();
 
   useEffect(() => {
+    scrollToTop();
     const loadMovie = async (movieId: string) => {
       try {
         const movie = await getMovieById(movieId);
@@ -34,7 +31,6 @@ const MoviePage = () => {
         const recommendations = await getRecommendations(movieId);
         const genresData = await getGenres();
         setMovie(movie);
-        setDuration(HourConversor(movie.runtime ? movie.runtime : 0));
         setCast(movieCast);
         setRecommendations(recommendations);
         setGenres(genresData);
@@ -50,85 +46,9 @@ const MoviePage = () => {
     <>
       {movie ? (
         <Content>
-          <GeneralInfos>
-            <img src={imagesURL + movie.poster_path} alt="" />
-            <div className="infos">
-              <div className="top">
-                <div>
-                  <p className="title">{movie.title}</p>
-                  <p className="tagline">{movie.tagline}</p>
-                  <p className="date">
-                    {movie.release_date.split("-").join("/")}
-                  </p>
-                </div>
-                <p className="average">{movie.vote_average.toFixed(2)}</p>
-              </div>
-              <p className="overview">{movie.overview}</p>
-              <div className="genres">
-                {movie.genres?.map((genre) => {
-                  return <p key={genre.id}>{genre.name}</p>;
-                })}
-              </div>
-              <div className="floor">
-                <div className="duration">
-                  <BiTimeFive />
-                  {duration}
-                </div>
-                {movie.budget && (
-                  <div className="budget">
-                    <BsCashCoin />
-                    {new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "USD",
-                    }).format(movie.budget)}
-                  </div>
-                )}
-              </div>
-            </div>
-          </GeneralInfos>
-          <Cast>
-            <p className="title">Cast:</p>
-            <div className="actors">
-              {cast &&
-                cast.map((actor, index) => {
-                  return (
-                    <div key={index} className="card">
-                      {actor.profile_path ? (
-                        <img
-                          src={imagesURL + actor.profile_path}
-                          alt={actor.name}
-                        />
-                      ) : (
-                        <img src={noProfilePic} alt={actor.name} />
-                      )}
-                      <div className="name">
-                        <p>{actor.name}</p>
-                        <p>{actor.character}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-          </Cast>
-          <Recommendations>
-            {recommendations && <p className="title">Recommendations:</p>}
-            {genres &&
-              recommendations?.map((movie, index) => {
-                const movieGenres = movie.genre_ids?.map((id) => {
-                  return genres[id];
-                });
-                return (
-                  <MovieCard
-                    id={movie.id}
-                    title={movie.title}
-                    vote_average={movie.vote_average}
-                    poster_path={movie.poster_path}
-                    genres={movieGenres ? movieGenres : []}
-                    key={index}
-                  />
-                );
-              })}
-          </Recommendations>
+          <GeneralMovieInfos {...movie} />
+          <MovieCast {...cast} />
+          <Recommendations recommendations={recommendations} genres={genres} />
         </Content>
       ) : (
         ""
