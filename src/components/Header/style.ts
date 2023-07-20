@@ -34,6 +34,7 @@ const Title = styled.div`
   color: #ffc107;
   min-width: 200px;
   max-width: 350px;
+  cursor: pointer;
 
   svg {
     font-size: 45px;
