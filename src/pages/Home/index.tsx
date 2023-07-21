@@ -1,9 +1,11 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "@mui/material/Pagination";
 
+import useQuery from "../../hooks/useQuery";
 import MovieInterface from "../../types/movieType";
 import { getGenres, getMoviesList } from "../../services/tmdb_services";
 import MovieCard from "../../components/MovieCard";
@@ -12,48 +14,48 @@ import scrollToTop from "../../hooks/scrollToTop";
 import Loading from "../../components/Loading";
 
 const HomePage = () => {
+  const query = useQuery();
+  const requestlist = query.get("requestlist") || "popular";
+  const actualPage = Number(query.get("page")) || 1;
+  const navigate = useNavigate();
+
   const [moviesList, setMoviesList] = useState<MovieInterface[]>([]);
-  const [actualPage, setActualPage] = useState<number>(1);
-  const [total_pages, setTotal_pages] = useState<number>(1);
   const [genres, setGenres] = useState<{ [id: number]: string }>();
-  const [requestList, setRequestList] = useState<number>(0);
-  const [load, setLoad] = useState<boolean>(true);
+  const [total_pages, setTotal_pages] = useState<number>(1);
 
-  const requestOptions = ["Popular", "Upcoming", "Now playing", "Top rated"];
-
-  useEffect(() => {
-    scrollToTop();
-    const loadMovies = async (requestList: number, page: number) => {
-      try {
-        const moviesData = await getMoviesList(requestList, page);
-        const genresData = await getGenres();
-        setMoviesList(moviesData.results);
-        setTotal_pages(moviesData.total_pages);
-        setGenres(genresData);
-        setLoad(false);
-      } catch (err) {
-        if (err instanceof AxiosError) notifyAxiosError(err.message);
-        else notifyError();
-        setActualPage(1);
-        setLoad(false);
-      }
-    };
-
-    loadMovies(requestList, actualPage);
-  }, [requestList, actualPage]);
-
-  const setList = (index: number) => {
-    setActualPage(1);
-    setRequestList(index);
-  };
+  const requestOptions = ["popular", "upcoming", "now_playing", "top_rated"];
 
   const notifyAxiosError = (message: string) => toast(message);
   const notifyError = () => toast("Unexpected error");
 
+  const setList = (list: string) => {
+    navigate(`/?requestlist=${list}&page=1`);
+  };
+
   const handlePage = (e: ChangeEvent<unknown>, page: number) => {
     e.preventDefault();
-    setActualPage(page);
+    navigate(`/?requestlist=${requestlist}&page=${page}`);
   };
+
+  useEffect(() => {
+    scrollToTop();
+
+    const loadMovies = async (request: string, page: number) => {
+      try {
+        const moviesData = await getMoviesList(request, page);
+        const genresData = await getGenres();
+        setMoviesList(moviesData.results);
+        setGenres(genresData);
+        setTotal_pages(moviesData.total_pages);
+      } catch (err) {
+        if (err instanceof AxiosError) notifyAxiosError(err.message);
+        else notifyError();
+        navigate(`/?requestlist=${requestlist}&page=1`);
+      }
+    };
+
+    loadMovies(requestlist, actualPage);
+  }, [requestlist, actualPage, navigate]);
 
   return (
     <Content>
@@ -62,33 +64,36 @@ const HomePage = () => {
           return (
             <RequestOption
               key={index}
-              onClick={() => setList(index)}
-              selected={requestList === index}>
+              onClick={() => setList(option)}
+              selected={requestlist === option}>
               {option}
             </RequestOption>
           );
         })}
       </RequestOptions>
-      {load && <Loading />}
-      <Movies>
-        {moviesList &&
-          genres &&
-          moviesList.map((movie, index) => {
-            const movieGenres = movie.genre_ids?.map((id) => {
-              return genres[id];
-            });
-            return (
-              <MovieCard
-                id={movie.id}
-                title={movie.title}
-                vote_average={movie.vote_average}
-                poster_path={movie.poster_path}
-                genres={movieGenres ? movieGenres : []}
-                key={index}
-              />
-            );
-          })}
-      </Movies>
+      {moviesList.length > 0 ? (
+        <Movies>
+          {moviesList &&
+            genres &&
+            moviesList.map((movie, index) => {
+              const movieGenres = movie.genre_ids?.map((id) => {
+                return genres[id];
+              });
+              return (
+                <MovieCard
+                  id={movie.id}
+                  title={movie.title}
+                  vote_average={movie.vote_average}
+                  poster_path={movie.poster_path}
+                  genres={movieGenres ? movieGenres : []}
+                  key={index}
+                />
+              );
+            })}
+        </Movies>
+      ) : (
+        <Loading />
+      )}
       {total_pages > 1 && (
         <Pages>
           <Pagination
