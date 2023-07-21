@@ -16,7 +16,13 @@ const Content = styled.div<Props>`
   padding: 0 10%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
+
+  .github{
+    font-size: 30px;
+    margin-left: 20px;
+  }
 
   @media (max-width: 500px) {
     flex-direction: column;
