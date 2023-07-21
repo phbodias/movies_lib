@@ -20,7 +20,7 @@ const App = () => {
     <BrowserRouter>
       <Header colorHeader={colorHeader} />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/:requestlist?/:page?" element={<HomePage />} />
         <Route path="/movie/:movieId" element={<MoviePage />} />
       </Routes>
     </BrowserRouter>

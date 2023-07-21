@@ -25,12 +25,11 @@ interface GetRecommendationsResponse {
 }
 
 export const getMoviesList = async (
-  requestList: number,
+  requestList: string,
   page: number
 ): Promise<GetMoviesResponse> => {
-  const requestOptions = ["popular", "upcoming", "now_playing", "top_rated"];
 
-  const res = await tmdb_api.get(`movie/${requestOptions[requestList]}`, {
+  const res = await tmdb_api.get(`movie/${requestList}`, {
     params: { page },
   });
 
