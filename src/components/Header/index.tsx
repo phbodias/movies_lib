@@ -1,5 +1,5 @@
 import { BiSolidCameraMovie } from "react-icons/bi";
-//import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineGithub } from "react-icons/ai";
 import { Content, Title } from "./style";
 import { useNavigate } from "react-router-dom";
 
@@ -22,6 +22,12 @@ const Header = (props: Props) => {
         <input type="text" placeholder="Search a movie title" />
         <AiOutlineSearch />
       </Search> */}
+      <a
+        href="https://github.com/phbodias/movies_lib"
+        target="_blank"
+        className="github">
+        <AiOutlineGithub />
+      </a>
     </Content>
   );
 };
