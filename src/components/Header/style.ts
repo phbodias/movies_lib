@@ -25,9 +25,8 @@ const Content = styled.div<Props>`
   }
 
   @media (max-width: 500px) {
-    flex-direction: column;
     align-items: center;
-    padding: 10px 0;
+    
   }
 `;
 
@@ -38,7 +37,6 @@ const Title = styled.div`
   font-weight: 700;
   font-size: 25px;
   color: #ffc107;
-  min-width: 200px;
   max-width: 350px;
   cursor: pointer;
 
