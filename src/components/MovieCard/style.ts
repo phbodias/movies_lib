@@ -5,8 +5,7 @@ const Content = styled.div`
   overflow-wrap: break-word;
 
   img {
-    width: 200px;
-    height: 350px;
+    width: 100%;
     object-fit: cover;
     cursor: pointer;
   }
@@ -21,6 +20,10 @@ const Content = styled.div`
   .box:hover {
     transform: translateY(-10px);
     box-shadow: 25px 10px 25px 2px rgba(0, 0, 0, 0.25);
+  }
+
+  @media (max-width: 520px) {
+    width: 300px;
   }
 `;
 
