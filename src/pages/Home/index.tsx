@@ -66,7 +66,7 @@ const HomePage = () => {
               key={index}
               onClick={() => setList(option)}
               selected={requestlist === option}>
-              {option}
+              {option.replace("_", " ").toUpperCase()}
             </RequestOption>
           );
         })}

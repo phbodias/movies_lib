@@ -28,8 +28,8 @@ const RequestOptions = styled.div`
 
 const RequestOption = styled.div<SelectedProps>`
   background-color: ${(props) => (props.selected ? "#218838" : "#000")};
-  width: 120px;
-  height: 30px;
+  width: 150px;
+  height: 40px;
   font-size: 15px;
   box-shadow: ${(props) => (props.selected ? "0 3px 5px #218838" : "none")};
   display: flex;
