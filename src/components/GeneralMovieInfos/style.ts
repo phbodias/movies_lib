@@ -57,6 +57,7 @@ const Content = styled.div`
 
     .genres {
       display: flex;
+      flex-wrap: wrap;
       gap: 7px;
       margin-top: 50px;
 
