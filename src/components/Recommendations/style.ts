@@ -7,7 +7,6 @@ const Content = styled.div`
   justify-content: center;
   gap: 15px;
   background-color: #ffffff;
-  padding-bottom: 30px;
 
   .title {
     font-size: 30px;
