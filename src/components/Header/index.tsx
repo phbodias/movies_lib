@@ -18,7 +18,7 @@ const Header = (props: Props) => {
   const searchMovie = () => {
     if (movieTitle.length < 2) return;
 
-    navigate(`/search/${movieTitle}`);
+    navigate(`/search/${movieTitle}/1`);
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {

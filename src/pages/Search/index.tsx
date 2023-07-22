@@ -1,25 +1,37 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { searchMovieByTitle } from "../../services/tmdb_services";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AxiosError } from "axios";
+import Pagination from "@mui/material/Pagination";
 import MovieInterface from "../../types/movieType";
 import MovieCard from "../../components/MovieCard";
-import { Content, Movies } from "./style";
+import { Content, Movies, Pages } from "./style";
+import scrollToTop from "../../hooks/scrollToTop";
 
 const SearchPage = () => {
-  const { movieTitle } = useParams();
+  const { movieTitle, page } = useParams();
+  const navigate = useNavigate();
 
   const [movies, setMovies] = useState<MovieInterface[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(0);
 
   const notify = (message: string) => toast(message);
 
+  const handlePage = (e: ChangeEvent<unknown>, page: number) => {
+    e.preventDefault();
+    movieTitle && navigate(`/search/${movieTitle}/${page}`);
+  };
+
   useEffect(() => {
+    scrollToTop();
+
     const searchMovie = async (movieTitle: string) => {
       try {
-        const movies = await searchMovieByTitle(movieTitle);
+        const movies = await searchMovieByTitle(movieTitle, Number(page));
         setMovies(movies.results);
+        setTotalPages(movies.total_pages);
       } catch (err) {
         if (err instanceof AxiosError) notify(err.message);
         else notify("Unexpected error");
@@ -27,7 +39,7 @@ const SearchPage = () => {
     };
 
     movieTitle && searchMovie(movieTitle);
-  }, [movieTitle]);
+  }, [movieTitle, page]);
 
   return (
     <Content>
@@ -51,6 +63,20 @@ const SearchPage = () => {
         </>
       ) : (
         <p className="title">No movie found for search "{movieTitle}"</p>
+      )}
+      {totalPages > 1 && page && (
+        <Pages>
+          <Pagination
+            count={totalPages}
+            page={Number(page)}
+            onChange={(event, page) => handlePage(event, page)}
+            variant="outlined"
+            shape="rounded"
+            color="primary"
+            siblingCount={1}
+            className="pages"
+          />
+        </Pages>
       )}
       <ToastContainer
         position="top-right"
