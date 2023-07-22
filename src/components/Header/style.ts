@@ -12,21 +12,21 @@ const Content = styled.div<Props>`
   top: 0;
   z-index: 1;
   transition: all ease 0.7s;
-  background-color: ${(props) => props.headercolor? "#fffcf5" : "rgba(0, 0, 0, 0.5)"};
+  background-color: ${(props) =>
+    props.headercolor ? "#fffcf5" : "rgba(0, 0, 0, 0.5)"};
   padding: 0 10%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
 
-  .github{
+  .github {
     font-size: 30px;
     margin-left: 20px;
   }
 
   @media (max-width: 500px) {
     align-items: center;
-    
   }
 `;
 
@@ -37,7 +37,6 @@ const Title = styled.div`
   font-weight: 700;
   font-size: 25px;
   color: #ffc107;
-  max-width: 350px;
   cursor: pointer;
 
   svg {
@@ -55,12 +54,18 @@ const Search = styled.div`
   max-width: 350px;
   position: sticky;
 
-  svg {
-    font-size: 25px;
+  button {
     position: relative;
     right: 30px;
+    border: none;
     border-left: 1px solid #000;
-    padding-left: 5px;
+    background-color: #fff;
+    cursor: pointer;
+
+    svg {
+      font-size: 25px;
+      padding-left: 5px;
+    }
   }
 
   input {
