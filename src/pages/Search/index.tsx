@@ -7,6 +7,7 @@ import { AxiosError } from "axios";
 import MovieInterface from "../../types/movieType";
 import MovieCard from "../../components/MovieCard";
 import { Content, Movies } from "./style";
+import scrollToTop from "../../hooks/scrollToTop";
 
 const SearchPage = () => {
   const { movieTitle } = useParams();
@@ -16,6 +17,8 @@ const SearchPage = () => {
   const notify = (message: string) => toast(message);
 
   useEffect(() => {
+    scrollToTop();
+
     const searchMovie = async (movieTitle: string) => {
       try {
         const movies = await searchMovieByTitle(movieTitle);
