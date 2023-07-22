@@ -80,10 +80,11 @@ export const getRecommendations = async (
 };
 
 export const searchMovieByTitle = async (
-  title: string
+  title: string,
+  page: number
 ): Promise<GetMoviesResponse> => {
   const res = await tmdb_api.get(`/search/movie`, {
-    params: { query: title, page: "1" },
+    params: { query: title, page: page },
   });
 
   const data = res.data as GetMoviesResponse;

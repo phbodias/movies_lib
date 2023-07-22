@@ -23,7 +23,7 @@ const App = () => {
       <Routes>
         <Route path="/:requestlist?/:page?" element={<HomePage />} />
         <Route path="/movie/:movieId" element={<MoviePage />} />
-        <Route path="/search/:movieTitle" element={<SearchPage />} />
+        <Route path="/search/:movieTitle/:page" element={<SearchPage />} />
       </Routes>
     </BrowserRouter>
   );
