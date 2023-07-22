@@ -43,6 +43,15 @@ const Content = styled.div`
 
     font-size: 13px;
   }
+
+  @media (max-width: 600px) {
+    padding: 10px;
+
+    img {
+      width: 200px;
+      height: 300px;
+    }
+  }
 `;
 
 export { Content };
