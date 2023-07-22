@@ -27,6 +27,10 @@ const Content = styled.div<Props>`
 
   @media (max-width: 500px) {
     align-items: center;
+
+    .github {
+      margin-left: 0;
+    }
   }
 `;
 
@@ -43,6 +47,12 @@ const Title = styled.div`
     font-size: 45px;
     cursor: pointer;
   }
+
+  @media (max-width: 600px) {
+    p {
+      display: none;
+    }
+  }
 `;
 
 const Search = styled.div`
@@ -50,7 +60,6 @@ const Search = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 30vw;
-  min-width: 200px;
   max-width: 350px;
   position: sticky;
 
@@ -84,6 +93,14 @@ const Search = styled.div`
 
   * {
     color: #000;
+  }
+
+  @media (max-width: 600px) {
+    width: fit-content;
+
+    input {
+      min-width: 100%;
+    }
   }
 `;
 
